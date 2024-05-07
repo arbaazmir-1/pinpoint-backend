@@ -10,8 +10,9 @@ const linkRouter = require('./routes/linkRoutes');
 const asynchandler = require("express-async-handler");
 const User = require('./models/userModel')
 const Link = require('./models/linksModel')
+const origin = process.env.CORS
 var corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: origin,
   optionsSuccessStatus: 200 
 }
 app.use(cors(corsOptions))
@@ -58,7 +59,7 @@ app.get('/:username', asynchandler(async(req,res) => {
   }
 }));
 
-
-app.listen(3000, () => {
+const port = process.env.PORT || 3000
+app.listen(port, () => {
   console.log("listening bro");
 });
