@@ -10,13 +10,24 @@ const linkRouter = require('./routes/linkRoutes');
 const asynchandler = require("express-async-handler");
 const User = require('./models/userModel')
 const Link = require('./models/linksModel')
-const origin = process.env.CORS
-var corsOptions = {
-  origin: origin,
-  optionsSuccessStatus: 200 
+let  whitelist = []
+whitelist.push(process.env.CORS)
+whitelist.push(process.env.API_STATUS_CHECKER)
+let corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  } 
 }
 app.use(cors(corsOptions))
 app.use(express.json());
+
+app.get('/api/status',(req,res)=>{
+  res.status(200).json({message:"ok"})
+})
 const url = process.env.MONGODB_URL
 if (mongoose.connection.readyState === 0) {
   mongoose
@@ -58,6 +69,18 @@ app.get('/:username', asynchandler(async(req,res) => {
     return res.status(500).json({ message: "server-error" });
   }
 }));
+app.use((err, req, res, next) => {
+  if (err.message === 'Not allowed by CORS') {
+    
+    
+    return res.status(403).json({ message: 'CORS error' });
+  }
+
+  console.error(err);
+  res.status(500).send('Something broke!');
+});
+
+
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {
