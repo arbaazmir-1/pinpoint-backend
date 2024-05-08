@@ -36,7 +36,7 @@ const createSection = asynchandler(async (req, res) => {
     const userFormDB = await User.findById(user._id);
     userFormDB.links = newLink;
     await userFormDB.save();
-    res.send("ok");
+
     return res.status(200).json({
       message: "section-created",
     });
