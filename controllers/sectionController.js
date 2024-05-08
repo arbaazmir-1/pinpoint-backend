@@ -31,7 +31,7 @@ const createSection = asynchandler(async (req, res) => {
         },
       ],
     });
-    console.log(user, links);
+    
     await newLink.save();
     const userFormDB = await User.findById(user._id);
     userFormDB.links = newLink;
@@ -81,7 +81,7 @@ const editSection = asynchandler(async (req, res) => {
         linkData.sections[sectionIndex].name = name;
         linkData.sections[sectionIndex].published = published;
         linkData.markModified('sections')
-        console.log(linkData.sections[sectionIndex])
+        
         const savedData = await linkData.save();
         if (!savedData) {
             return res.status(500).json({ message: "failed-to-save-section" });

@@ -18,7 +18,7 @@ const createUser = asynchandler(async (req, res) => {
   
   if (existingUser) {
     if(!existingUser.emailVerified){
-      console.log(existingUser)
+      
       return res.status(200).json({
         email:existingUser.email,
         
@@ -92,7 +92,7 @@ const loginUser =asynchandler( async (req, res, next) => {
 const verifyCode = asynchandler(async(req,res)=>{
   const {email,code} =req.body
   const user = await User.findOne({email:email})
-  console.log(user)
+  
   if(user.emailVerified){
     return res.status(200).json({message:"email-verified"})
   }

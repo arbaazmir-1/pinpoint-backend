@@ -58,7 +58,7 @@ passport.use('jwt-verify', new JwtStrategy(jwtOptions, async (payload, done) => 
 
         done(null, user);
     } catch (error) {
-        console.log(error)
+        
         done(error);
     }
 }
