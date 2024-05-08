@@ -14,7 +14,7 @@ npm install
 This Project Needs 6 env variables, eg:
 
 ```ssh
-MONGODB_URL="mongodb://demo:sha256life@127.0.0.1:27017/pinpoint?authMechanism=SCRAM-SHA-256&authSource=admin"
+MONGODB_URL="mongodb://demo:password@127.0.0.1:27017/pinpoint?authMechanism=SCRAM-SHA-256&authSource=admin"
 JWT_SECRET="example"
 EMAILJS_PRIVATE_KEY ="example"
 EMAILJS_TEMPLATEID="example"
