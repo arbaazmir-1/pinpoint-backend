@@ -10,6 +10,8 @@ const linkRouter = require('./routes/linkRoutes');
 const asynchandler = require("express-async-handler");
 const User = require('./models/userModel')
 const Link = require('./models/linksModel')
+const rateLimit = require('express-rate-limit')
+
 let  whitelist = []
 whitelist.push(process.env.CORS)
 whitelist.push(process.env.API_STATUS_CHECKER)
@@ -22,6 +24,18 @@ let corsOptions = {
     }
   } 
 }
+const limiter = rateLimit({
+  windowMs: 60 * 1000, 
+  limit: 20,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false, 
+  
+})
+
+app.use(limiter)
+
+
+
 app.use(cors(corsOptions))
 app.use(express.json());
 
